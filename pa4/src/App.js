@@ -1,47 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CreateMeeting from "./components/CreateMeeting";
 import FullSchedule from "./components/FullSchedule";
 
 export default function App() {
-  let [schedule, setSchedule] = useState(
-    [
-      {
-        "title": "CS 185 Misha's Office Hour",
-        "date": "2021-03-05T19:00",
-        "zoomLink": "https://ucsb.zoom.us/j/86623368970",
-        "important": true
-      },
-      {
-        "title": "CS 185 Wenda's Office Hour",
-        "date": "2021-03-05T09:00",
-        "zoomLink": "https://ucsb.zoom.us/j/8311826784",
-        "important": true
-      },
-      {
-        "title": "Game Night",
-        "date": "2021-03-05T23:00",
-        "zoomLink": "https://ucsb.zoom.us/j/8311826784",
-        "important": false
-      },
-      {
-        "title": "new meeting",
-        "date": "2021-02-27T00:30",
-        "zoomLink": "https://ucsb.zoom.us/j/8311826784",
-        "important": false
-      }
-    ]
-  );
+  let [schedule, setSchedule] = useState([]);
+  let [editIndex, setEditIndex] = useState(-1);
 
-  function handleDeleteScheduleItem(id) {
+  useEffect(() => {
+    async function getSchedule() {
+      const scheduleFromServer = await fetchSchedule();
+      setSchedule(scheduleFromServer);
+    };
+    getSchedule();
+  }, [])
+
+  async function fetchSchedule() {
+    const res = await fetch(
+      "http://localhost:5000/schedule", {
+        method: "GET"
+      }
+    );
+    return await res.json();
+  }
+
+  async function addMeeting(item) {
+    const res = await fetch(
+      "http://localhost:5000/schedule", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(item),
+      }
+    );
+    const data = await res.json();
+    setSchedule([...schedule, item]);
+  }
+
+  async function editMeeting(index, item) {
+    const res = await fetch(
+      `http://localhost:5000/schedule/${index+1}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(item),
+      }
+    );
+    const data = await res.json();
     let newSchedule = [...schedule];
-    newSchedule.splice(id,1);
+    newSchedule[index] = item;
     setSchedule(newSchedule);
   }
 
-  function handleAddScheduleItem(item) {
-    let newSchedule = [...schedule];
-    newSchedule.push(item)
-    setSchedule(newSchedule);
+  async function deleteMeeting(id) {
+    console.log(id+1);
+    const res = await fetch(
+      `http://localhost:5000/schedule/${id+1}`, { 
+        method: "DELETE"
+      }
+    );
+    schedule.splice(id,1);
+    setSchedule([...schedule]);
   }
 
   return (
@@ -51,10 +71,10 @@ export default function App() {
       </header>
       <div className="dual-section-display">
         <div className="dual-section">
-          <FullSchedule schedule={schedule} handleDeleteScheduleItem={handleDeleteScheduleItem} />
+          <FullSchedule schedule={schedule} setEditIndex={setEditIndex} deleteMeeting={deleteMeeting} />
         </div>
         <div className="dual-section">
-          <CreateMeeting handleAddScheduleItem={handleAddScheduleItem} />
+          <CreateMeeting schedule={schedule} addMeeting={addMeeting} editIndex={editIndex} setEditIndex={setEditIndex} editMeeting={editMeeting} />
         </div>
       </div>
     </div>
