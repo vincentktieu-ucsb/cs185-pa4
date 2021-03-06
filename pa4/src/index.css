@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap");
+
+body {
+  background-color: #24252a;
+  font-family: "Montserrat", sans-serif;
+  color: #edf0f1;
+  text-decoration: none;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+.container {
+  padding: 0px 5%;
+}
+
+.nav-brand {
+  border: 1px solid white;
+  padding: 4px;
+  border-radius: 8px;
+  width: 215px;
+}
+
+.dual-section-display {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.dual-section {
+  border: 2px rgba(93, 131, 141, 0.8) solid;
+  border-radius: 15px;
+  background-color: rgb(250, 249, 246);
+  color: #24252a;
+  padding: 0px 20px;
+  width: 35vw;
+  height: 700px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1200px) {
+  .dual-section {
+    width: 80%;
+  }
+}
+
+.section-title {
+  margin: 10px;
+  font-size: 36px;
+}
+
+.blue-bar {
+  height: 3px;
+  width: 100%;
+  background-color: rgb(113, 163, 255);
+}
+
+label {
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+.important-radio {
+  height: 20px;
+  width: 20px;
+}
+
+button {
+  padding: 9px 25px;
+  background-color: #24252a;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  margin-bottom: 10px;
+  height: 40px;
+  width: 200px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: rgb(24, 104, 253);
+}
+
+.schedule-item {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.schedule-important {
+  width: 10px;
+  background-color: rgb(113, 163, 255);
+}
+
+.schedule-text {
+  background-color: rgb(230, 230, 230);
+  padding: 10px;
+  width: 100%;
+}
+
+.schedule-title {
+  font-size: 20px;
+}
+
+.schedule-delete {
+  padding: 10px;
+  background-color: rgb(230, 230, 230);
+}
+
+.schedule-delete-button {
+  color: rgb(248, 3, 3);
+  font-size: 20px;
+}
+
+.schedule-delete-button:hover {
+  color: rgb(202, 1, 1);
+  cursor: pointer;
+}
