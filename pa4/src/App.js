@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import CreateMeeting from "./components/CreateMeeting";
-import FullSchedule from "./components/FullSchedule";
+import ScheduleItem from "./components/ScheduleItem";
 
 export default function App() {
   let [schedule, setSchedule] = useState([]);
   let [editIndex, setEditIndex] = useState(-1);
+
+  let [title, setTitle] = useState("");
+  let [date, setDate] = useState("");
+  let [zoomLink, setZoomLink] = useState("");
+  let [important, setImportant] = useState(false);
 
   useEffect(() => {
     async function getSchedule() {
@@ -34,12 +38,13 @@ export default function App() {
       }
     );
     const data = await res.json();
-    setSchedule([...schedule, item]);
+    data.id = schedule.length + 1;
+    setSchedule([...schedule, data]);
   }
 
-  async function editMeeting(index, item) {
+  async function updateMeeting(index, item) {
     const res = await fetch(
-      `http://localhost:5000/schedule/${index+1}`, {
+      `http://localhost:5000/schedule/${schedule[index].id}`, {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
@@ -47,21 +52,61 @@ export default function App() {
         body: JSON.stringify(item),
       }
     );
-    const data = await res.json();
-    let newSchedule = [...schedule];
-    newSchedule[index] = item;
-    setSchedule(newSchedule);
+    schedule[index] = item;
+    setSchedule([...schedule]);
   }
 
-  async function deleteMeeting(id) {
-    console.log(id+1);
+  async function deleteMeeting(index) {
     const res = await fetch(
-      `http://localhost:5000/schedule/${id+1}`, { 
+      `http://localhost:5000/schedule/${index}`, { 
         method: "DELETE"
       }
     );
-    schedule.splice(id,1);
+    schedule.splice(index,1);
     setSchedule([...schedule]);
+  }
+
+  function editMeeting(index) {
+    setEditIndex(index);
+    
+    setTitle(schedule[index].title);
+    setDate(schedule[index].date);
+    setZoomLink(schedule[index].zoomLink);
+    setImportant(schedule[index].important);
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+
+    if (editIndex !== -1) {
+      updateMeeting(editIndex, {
+        title,
+        date,
+        zoomLink,
+        important
+      })
+    } else {
+      addMeeting({
+        title,
+        date,
+        zoomLink,
+        important
+      });
+    }
+
+    setTitle("");
+    setDate("");
+    setZoomLink("");
+    setImportant("");
+
+    setEditIndex(-1);
+  }
+
+  let displaySchedule = []
+  for (let i=0; i < schedule.length; i++) {
+    displaySchedule.push(
+      <ScheduleItem schedule={schedule} editMeeting={editMeeting} deleteMeeting={deleteMeeting} index={i} key={i} />
+    );
   }
 
   return (
@@ -71,10 +116,39 @@ export default function App() {
       </header>
       <div className="dual-section-display">
         <div className="dual-section">
-          <FullSchedule schedule={schedule} setEditIndex={setEditIndex} deleteMeeting={deleteMeeting} />
+          <div className="section-title"><b>Full Schedule</b></div>
+          <br/>
+          {/* <pre>{JSON.stringify(schedule, null, 2)}</pre> */}
+          {displaySchedule}
         </div>
         <div className="dual-section">
-          <CreateMeeting schedule={schedule} addMeeting={addMeeting} editIndex={editIndex} setEditIndex={setEditIndex} editMeeting={editMeeting} />
+          {
+            editIndex === -1 ? 
+            <div className="section-title">
+              <b>Create Meeting</b>
+            </div> :
+            <div className="section-title">
+              <button onClick={() => setEditIndex(-1)}>{"< "}Create Meeting</button>
+              <br/>
+              <b>Edit Meeting</b>
+            </div>
+          }
+          <br/>
+          <form>
+            <label htmlFor="title">Title</label><br/>
+            <input type="text" id="title" onChange={(e) => setTitle(e.target.value)} value={title} /><br/><br/>
+            <label htmlFor="date">Date</label><br/>
+            <input type="text" id="date" onChange={(e) => setDate(e.target.value)} value={date} /><br/><br/>
+            <label htmlFor="zoom-link">Zoom Link</label><br/>
+            <input type="text" id="zoom-link" onChange={(e) => setZoomLink(e.target.value)} value={zoomLink} /><br/><br/>
+            <label htmlFor="important">Important</label>{" "}
+            <input className="important-radio" type="radio" id="important" onClick={() => setImportant(!important)} checked={important} /><br/><br/>
+            {
+              editIndex === -1 ? 
+              <button onClick={(e) => submitForm(e)}>Create!</button> :
+              <button onClick={(e) => submitForm(e)}>Save Edit!</button>
+            }
+          </form>
         </div>
       </div>
     </div>

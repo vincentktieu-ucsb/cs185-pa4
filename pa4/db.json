@@ -1,10 +1,10 @@
 {
   "schedule": [
     {
-      "title": "supp",
-      "date": "",
-      "zoomLink": "",
-      "important": "",
+      "title": "CS 185 Misha's Office Hour",
+      "date": "2021-03-05T19:00",
+      "zoomLink": "https://ucsb.zoom.us/j/86623368970",
+      "important": true,
       "id": 1
     },
     {
@@ -15,60 +15,18 @@
       "id": 2
     },
     {
-      "title": "",
-      "date": "",
-      "zoomLink": "",
+      "title": "Swag Night",
+      "date": "lmao",
+      "zoomLink": "linkkkkk",
       "important": false,
-      "id": 6
+      "id": 3
     },
     {
-      "title": "",
-      "date": "",
-      "zoomLink": "",
-      "important": "",
-      "id": 7
-    },
-    {
-      "title": "",
-      "date": "",
-      "zoomLink": "",
-      "important": "",
-      "id": 8
-    },
-    {
-      "title": "",
-      "date": "",
-      "zoomLink": "",
-      "important": "",
-      "id": 9
-    },
-    {
-      "title": "",
-      "date": "",
-      "zoomLink": "",
-      "important": "",
-      "id": 10
-    },
-    {
-      "title": "",
-      "date": "",
-      "zoomLink": "",
-      "important": false,
-      "id": 11
-    },
-    {
-      "title": "",
-      "date": "",
-      "zoomLink": "",
-      "important": "",
-      "id": 12
-    },
-    {
-      "title": "",
-      "date": "",
-      "zoomLink": "",
-      "important": "",
-      "id": 13
+      "title": "new meeting!!!!",
+      "date": "2021-02-27T00:30",
+      "zoomLink": "https://ucsb.zoom.us/j/8311826784",
+      "important": true,
+      "id": 4
     }
   ]
 }
