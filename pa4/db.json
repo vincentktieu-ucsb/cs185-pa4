@@ -22,11 +22,11 @@
       "id": 3
     },
     {
-      "title": "asdffasdffasdffasdffasd",
-      "date": "2021-03-13T18:05",
-      "zoomLink": "zoom",
-      "important": true,
-      "id": 5
+      "title": "new meeting",
+      "date": "2021-02-27T00:30",
+      "zoomLink": "https://ucsb.zoom.us/j/8311826784",
+      "important": false,
+      "id": 4
     }
   ]
 }

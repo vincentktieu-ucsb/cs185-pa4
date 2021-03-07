@@ -60,7 +60,7 @@ export default function App() {
 
   async function deleteMeeting(index) {
     const res = await fetch(
-      `http://localhost:5000/schedule/${index}`, { 
+      `http://localhost:5000/schedule/${schedule[index].id}`, { 
         method: "DELETE"
       }
     );
