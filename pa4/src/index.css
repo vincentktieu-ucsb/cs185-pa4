@@ -36,7 +36,7 @@ h3 {
   color: #24252a;
   padding: 0px 20px;
   width: 35vw;
-  min-height: 700px;
+  min-height: 680px;
   margin-bottom: 10px;
 }
 
@@ -132,4 +132,8 @@ button:hover {
 .schedule-delete-button:hover {
   color: rgb(202, 1, 1);
   cursor: pointer;
+}
+
+.form-feedback {
+  color: rgb(248, 3, 3);
 }

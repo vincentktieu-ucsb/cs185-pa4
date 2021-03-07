@@ -4,7 +4,7 @@ export default function ScheduleItem(props) {
   let { schedule, deleteMeeting, editMeeting, index } = props;
 
   return (
-    <div className="schedule-item">
+    <div className="schedule-item" onDoubleClick={() => editMeeting(index)}>
       <div className={(schedule[index].important && schedule[index].important) ? "schedule-important" : ""} />
       <div className="schedule-text">
         <div className="schedule-title"><b>{schedule[index].title}</b></div>
